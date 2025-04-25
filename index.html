@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cliff's Care Routine</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1e1e2f;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1, h2 {
+      color: #81c784;
+      margin-top: 0;
+    }
+    h3 {
+      color: #aed581;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+    section {
+      margin-bottom: 2rem;
+      background: #2c2c3a;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    }
+    ul {
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+    ul li {
+      margin: 0.5rem 0;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    ul li.done {
+      text-decoration: line-through;
+      color: #9e9e9e;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cliff's Daily Care Routine</h1>
+
+  <section>
+    <h2 id="today-title">Today's Care Plan</h2>
+    <div id="today-plan"><p>Loading...</p></div>
+  </section>
+
+  <section>
+    <h2>🌞 Morning Routine</h2>
+    <h3 onclick="toggleSection(this)">🚿 Shower & Body</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Quick shower cleanse: Use Glow Getter Oil or Body Wash depending on need</li>
+    </ul>
+    <h3 onclick="toggleSection(this)">🧴 Skincare</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Rinse face with lukewarm water</li>
+      <li onclick="this.classList.toggle('done')">Glass Skin Veil Mist or The Essence</li>
+      <li onclick="this.classList.toggle('done')">Glass Skin Refining Serum</li>
+      <li onclick="this.classList.toggle('done')">Water Gel Moisturizer</li>
+      <li onclick="this.classList.toggle('done')">Sunscreen (BGS, Kinlò, or EltaMD)</li>
+      <li onclick="this.classList.toggle('done')">Optional: Seal dry areas with Lux Beam Oil</li>
+    </ul>
+    <h3 onclick="toggleSection(this)">💇 Hair & Scalp</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Mist scalp and locs with rose water or hydrating spray</li>
+      <li onclick="this.classList.toggle('done')">Seal with lightweight oil (jojoba, castor, etc.)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🌙 Evening Routine</h2>
+    <h3 onclick="toggleSection(this)">🚿 Shower & Body</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Shower or rinse (choose based on day’s activity)</li>
+    </ul>
+    <h3 onclick="toggleSection(this)">🧴 Skincare</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Double Cleanse (Ginger Melt + Power Calm)</li>
+      <li onclick="this.classList.toggle('done')">Rice Dough Scrub (2×/week)</li>
+      <li onclick="this.classList.toggle('done')">Power Cocktail or Glass Skin Serum</li>
+      <li onclick="this.classList.toggle('done')">Matcha Pudding or Water Gel Moisturizer</li>
+      <li onclick="this.classList.toggle('done')">Seal with Lux Beam Oil</li>
+      <li onclick="this.classList.toggle('done')">Apply Beard Oil</li>
+    </ul>
+    <h3 onclick="toggleSection(this)">💇 Hair & Scalp</h3>
+    <ul>
+      <li onclick="this.classList.toggle('done')">Massage scalp for 1–2 minutes</li>
+      <li onclick="this.classList.toggle('done')">Wrap with satin/silk scarf or use satin pillowcase</li>
+    </ul>
+  </section>
+
+  <script>
+    function toggleSection(header) {
+      const ul = header.nextElementSibling;
+      if (ul && ul.tagName === 'UL') {
+        ul.classList.toggle('hidden');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const dayPlans = {
+        Monday: ["Hydration only", "Hydrate & oil scalp", "Glow Getter Oil + body wash"],
+        Tuesday: ["Retinol or Power Cocktail Serum", "Hydrate & oil scalp", "Glow Getter Oil only"],
+        Wednesday: ["Exfoliate (Rice Dough Scrub) + Serum", "Hydrate & oil scalp", "Oil or wash depending on sweat"],
+        Thursday: ["Super Reboot Exfoliation Mask", "Hydrate & oil scalp", "Oil or wash depending on skin needs"],
+        Friday: ["Retinol or Power Cocktail Serum", "Hydrate & oil scalp", "Oil only (gentle post-retinol care)"],
+        Saturday: ["Hydration only", "Hydrate & oil scalp", "Body wash only (refresh)"],
+        Sunday: ["Ginger Melt + Rice Dough Scrub", "Weekly wash + Hydrate", "Oil + targeted body wash (deep clean areas)"]
+      };
+
+      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      const plan = dayPlans[today];
+      const title = document.getElementById('today-title');
+      const planDiv = document.getElementById('today-plan');
+
+      if (!plan) {
+        title.textContent = 'No plan found';
+        return;
+      }
+      title.textContent = `${today}'s Care Plan`;
+
+      const ul = document.createElement('ul');
+      plan.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${['Skincare', 'Hair', 'Shower'][index]}: ${item}`;
+        li.addEventListener('click', () => {
+          li.classList.toggle('done');
+        });
+        ul.appendChild(li);
+      });
+
+      planDiv.innerHTML = '';
+      planDiv.appendChild(ul);
+    });
+  </script>
+</body>
+</html>
